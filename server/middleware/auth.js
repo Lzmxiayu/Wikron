@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 
-const secret = 'test';
+
 
 const auth = async (req, res, next) => {
   try {
@@ -11,7 +11,7 @@ const auth = async (req, res, next) => {
     let decodedData;
 
     if (token && isCustomAuth) {      
-      decodedData = jwt.verify(token, secret);
+      decodedData = jwt.verify(token, process.env.secret);
 
       req.userId = decodedData?.id;
     } else {

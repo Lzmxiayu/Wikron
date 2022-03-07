@@ -33,7 +33,7 @@ export default {
       }
     },
     created(){
-      this.profile = JSON.parse(localStorage.getItem('profile'))
+      this.profile = JSON.parse(localStorage.getItem('profile')).user
       
       // console.log(JSON.parse(this.profile))
     }

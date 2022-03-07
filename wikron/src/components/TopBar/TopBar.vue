@@ -73,16 +73,17 @@ export default {
       },
       Logout(){
         // let profile = JSON.parse(localStorage.getItem('profile'))
+        // localStorage.setItem()
         localStorage.removeItem('profile')
         location.reload()
       }
     },
     created(){
       const profile = JSON.parse(localStorage.getItem('profile'))
-      // console.log(profile.hasSignin)
+      // console.log(profile)
       if(profile){
         this.hasSignin = profile.hasSignin
-        this.username = profile.username
+        this.username = profile.user.username
       }
       // console.log(this.profile)
     }

@@ -24,7 +24,6 @@ export default {
       }
     },
     async mounted(){
-      // console.log(this.profile)
       let posts
       if(this.mode == 'all'){
          posts = await getPosts()
@@ -34,13 +33,7 @@ export default {
          this.posts = posts.data
         //  console.log(posts)
       }
-        
-        
-        // this.posts = posts.data
-                // location.reload()
-        // this.$bus.$on('reload',()=>{
-        //     location.reload()
-        // })
+
     }
     
 }

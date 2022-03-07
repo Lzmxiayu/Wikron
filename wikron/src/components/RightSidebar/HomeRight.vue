@@ -5,53 +5,49 @@
     </div>
      <div class="PersIntro">
           <span class="Pername" @click="PushProfile">
-            <b>{{profile.username}}</b> 
+            <b>{{currenUser.username}}</b> 
           </span>
           <span class="Persondesc">
-              {{profile.desc}}
+              {{currenUser.desc}}
           </span>
         </div>
     
         <img class="rightbarAd" src="assets/logo.png" alt="" />
         <h4 class="rightbarTitle">关注</h4>
-        <ul class="rightbarFriendList" v-if="endi">
-          <div v-for='friend in friends' :key='friend._id' class="friend">
+        <ul class="rightbarFriendList" >
+  
+          <div v-for="friend in friends" :key='friend._id' class="friend" @click="PushProfile(friend)">
             <img class="friendImg" src="../../assets/1.jpg" alt="" />
-            <p class="friendName">{{firend.username}}</p>
+            <p class="friendName">{{friend.username}}</p>
           </div>
         </ul>
   </div>
 </template>
 
 <script>
-import { getfriends } from '../../actions/users'
+import { getfriends, getUser } from '../../actions/users'
 export default {
     name:'homeright',
     props:['profile'],
     data(){
       return{
+        currenUser:{},
         friends:[],
-        endi:false
-
       }
     },
     methods:{
-      PushProfile(){
-        this.$router.push({
-          name:'Profile',
-          params:{
-            profile:this.profile
-          }
-        })
+      PushProfile(friend){
+        getUser(friend._id,this.$router)
       }
     },
-    // mounted(){
-    //   console.log(this.frinends)
-    // },
-    async created(){
-      this.frinends = await getfriends(this.profile._id)
-       this.endi = await true
-      console.log(this.frinends)
+    async mounted(){
+      const profile = JSON.parse(localStorage.getItem('profile'));
+      if(!profile || !profile.hasSignin)
+        return;
+
+      this.currenUser = profile.user
+      this.friends = await getfriends(this.currenUser._id);
+
     }
 
 }
@@ -107,18 +103,18 @@ export default {
 }
 .friend{
    width:100px;
-  height:120px;
-  flex:1;
+  /*height:120px; */
+  /* flex:1; */
   display: flex;
-  align-items: center;
-  justify-content: center;
+  /* align-items: center; */
+  /* justify-content: center; */
   flex-direction: column;
-  /* text-align: center; */
+  text-align: center;
 }
 .friendImg{
-  width:80px;
+  width:80%;
   height:80px;
-
+  margin-left:10%;
   border-radius:20%;
   margin-right:10%;
   object-fit: cover;
@@ -126,7 +122,7 @@ export default {
 }
 .friendName{
   font-size: 15px;
-  margin:0% auto;
+  /* margin:0% auto; */
 }
 
 .rightbarTitle{

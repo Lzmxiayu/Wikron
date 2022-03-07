@@ -50,9 +50,8 @@ export default {
                 name:route
             })
         },
-        SignIn(){
-          let res = signin(this.loginForm,this.$router)
-          console.log(res)
+        async SignIn(){
+          let res = await signin(this.loginForm,this.$router)
 
         }
     }

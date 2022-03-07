@@ -3,7 +3,7 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 
-const secret = 'test';
+
 //REGISTER
 router.post("/register", async (req, res) => {
   try {
@@ -21,7 +21,7 @@ router.post("/register", async (req, res) => {
     console.log('success')
     //save user and respond
     const user = await newUser.save();
-    const token = jwt.sign( { email: user.email, id: user._id }, secret, { expiresIn: "1h" } );
+    const token = jwt.sign( { email: user.email, id: user._id }, process.env.secret, { expiresIn: "1h" } );
 
     res.status(200).json({user,token});
   } catch (err) {
@@ -36,7 +36,7 @@ router.post("/login", async (req, res) => {
     !user && res.status(404).json("user not found");
 
     const validPassword = await bcrypt.compare(req.body.password, user.password)
-    const token = jwt.sign( { email: user.email, id: user._id }, secret, { expiresIn: "1h" } );
+    const token = jwt.sign( { email: user.email, id: user._id }, process.env.secret, { expiresIn: "1h" } );
 
     !validPassword && res.status(400).json("wrong password")
 

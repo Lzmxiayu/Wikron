@@ -44,7 +44,7 @@ export const unfollowUser = async (current,obj)=> {
 export const getfriends = async (id,endi)=> {
   try {
     let res = await api.getFriends(id)
-    console.log(res)
+    // console.log(JSON.parse(res.data))
     return res.data
   //   return res
   } catch (error) {

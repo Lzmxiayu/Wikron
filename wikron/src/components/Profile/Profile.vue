@@ -1,6 +1,6 @@
 <template>
   <div id="profile">
-      <top-bar :profile="profile"/>
+      <top-bar :profile="currentUser"/>
       <div class="profile">
         <left-side />
         <div class="profileRight">
@@ -91,18 +91,18 @@ export default {
       }
     },
     created(){
-      this.currentUser = JSON.parse(localStorage.getItem('profile'))
+      const profile = JSON.parse(localStorage.getItem('profile'))
+      this.currentUser = profile.user
       this.profile = this.$route.params.profile   
 
-      console.log(this.currentUser)
-      if(this.currentUser && this.currentUser.hasSignin){
+      console.log(profile.user && profile.hasSignin)
+      if(profile.user && profile.hasSignin){
         this.hasSignin =true
-
+        this.hasfollow = 1
         this.currentUser.followings.map((friend)=>{
           if(friend == this.profile._id)
             this.hasfollow = 2
         })
-
       }else{
         this.hasfollow = 1
       }
